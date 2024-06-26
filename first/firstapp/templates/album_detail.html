@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First - Sua Música, Seus Favoritos</title>
+    <title>Lista de Álbuns - First</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,25 +35,29 @@
             max-width: 1200px;
             margin: auto;
         }
-        .nav {
-            text-align: center;
-            margin-bottom: 20px;
+        .album-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        .nav a {
-            margin: 0 10px;
-            text-decoration: none;
+        .album-table th, .album-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .album-table th {
+            background-color: #ff4500;
+            color: white;
+            text-align: left;
+        }
+        .album-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .album-table tr:hover {
+            background-color: #ddd;
+        }
+        .album-table td a {
             color: #ff4500;
-        }
-        .album-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .album-list li {
-            margin: 5px 0;
-        }
-        .album-list a {
             text-decoration: none;
-            color: #ff4500;
         }
     </style>
 </head>
@@ -64,21 +68,23 @@
     </header>
     <main>
         <div class="container">
-            <nav class="nav">
-                <a href="#">Início</a>
-                <a href="#">Explorar</a>
-                <a href="#">Minha Biblioteca</a>
-                <a href="#">Perfil</a>
-                <a href="#">Configurações</a>
-            </nav>
-            <h2>Bem-vindo ao First!</h2>
-            <p>Descubra novas músicas, acompanhe seus artistas favoritos e crie sua própria biblioteca musical.</p>
-            <h3>Meus Álbuns</h3>
-            <ul class="album-list">
-                {% for album in albuns %}
-                <li><a href="{%url 'firstapp:album_detail' album.id%}">{{ album.titulo }}</a></li>
-                {% endfor %}
-            </ul>
+            <h2>Lista de Álbuns</h2>
+            <table class="album-table">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Artista</th>
+                        <th>Gênero</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="#">{{ album.titulo }}</a></td>
+                        <td>{{ album.artista }}</td>
+                        <td>{{ album.genero }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </main>
     <footer>
