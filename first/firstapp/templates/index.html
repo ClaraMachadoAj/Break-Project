@@ -21,6 +21,7 @@
             background-color: white;
             padding: 20px;
             margin: 20px;
+            padding-bottom: 60px; /* Add padding to the bottom */
         }
         footer {
             background-color: #ff4500;
@@ -44,16 +45,23 @@
             text-decoration: none;
             color: #ff4500;
         }
-        .album-list {
+        .list {
             list-style-type: none;
             padding: 0;
         }
-        .album-list li {
+        .list li {
             margin: 5px 0;
         }
-        .album-list a {
+        .list a {
             text-decoration: none;
             color: #ff4500;
+        }
+        .list a:hover {
+            text-decoration: underline;
+        }
+        .section-title {
+            margin-top: 20px;
+            color: black;
         }
     </style>
 </head>
@@ -73,12 +81,35 @@
             </nav>
             <h2>Bem-vindo ao First!</h2>
             <p>Descubra novas músicas, acompanhe seus artistas favoritos e crie sua própria biblioteca musical.</p>
-            <h3>Meus Álbuns</h3>
-            <ul class="album-list">
+            
+            <h3 class="section-title">Meus Artistas</h3>
+            <ul class="list artists-list">
+                {% for artista in artistas %}
+                <li><a href="">{{ artista.nome }}</a></li>
+                {% endfor %}
+            </ul>
+            
+            <h3 class="section-title">Meus Álbuns</h3>
+            <ul class="list album-list">
                 {% for album in albuns %}
                 <li><a href="{%url 'firstapp:album_detail' album.id%}">{{ album.titulo }}</a></li>
                 {% endfor %}
             </ul>
+            
+            <h3 class="section-title">Minhas Músicas</h3>
+            <ul class="list music-list">
+                {% for musica in musicas %}
+                <li>
+                    <a href=""> {{ musica.titulo }} </a>
+                    <a href=""> <data-value="1">&#9733;</a>
+                    <a href=""> <data-value="2">&#9733;</a>
+                    <a href=""> <data-value="3">&#9733;</a>
+                    <a href=""> <data-value="4">&#9733;</a>
+                    <a href=""> <data-value="5">&#9733;</a>
+                </li>
+                {% endfor %}
+            </ul>
+
         </div>
     </main>
     <footer>

@@ -83,6 +83,9 @@
                         <td>{{ album.artista }}</td>
                         <td>{{ album.genero }}</td>
                     </tr>
+                    {%for musica in album.musica_set.all%}
+                    <li>musica.titulo</li>
+                    {%endfor%}
                 </tbody>
             </table>
         </div>

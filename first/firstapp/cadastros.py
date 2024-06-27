@@ -1,15 +1,42 @@
 from firstapp.models import Musica
 from firstapp.models import Album
+from firstapp.models import Artista
+from firstapp.models import AvaliacaoMusica
+
+class CadastroArtistas:
+    def criar(nome):
+        art = Artista()
+        art.nome = nome
+        art.save()
+
+    def obter(id):
+        return Artista.objects.filter(id = id).first()
+    
+    def excluir(id):
+        art = CadastroAlbums.obter(id)
+        art.delete()
+
+    def atualizar(nome, artista_id):
+        art = CadastroArtistas.obter(artista_id)
+        if art is None:
+            raise ValueError('Artista não existe.')
+        art.nome = nome
+        art.save()
+    
+    def obter_ultimos_artistas(quantidade):
+        return Artista.objects.order_by("-id")[:quantidade]
 
 class CadastroAlbums: 
     
-    def criar(titulo, artista, genero):
+    def criar(titulo, artista_id, genero, ano_lancamento):
         a = Album()
-        a.artista = artista
         a.titulo = titulo
         a.genero = genero
+        a.artista = CadastroArtistas.obter(artista_id)
+        a.ano_lancamento = ano_lancamento
         a.save()
         return a 
+    
     def obter(id):
         return Album.objects.filter(id = id).first()
     
@@ -17,11 +44,11 @@ class CadastroAlbums:
         a = CadastroAlbums.obter(id)
         a.delete()
     
-    def atualizar(id, titulo, artista, genero):
+    def atualizar(id, titulo, artista, genero, artista_id):
         a = CadastroAlbums.obter(id)
         if a is None:
             raise ValueError('Album não existe.')
-        a.artista = artista
+        a.artista = CadastroArtistas.obter(artista_id)
         a.titulo = titulo
         a.genero = genero
         a.save()
@@ -63,5 +90,23 @@ class CadastrosMusicas:
         m.save()
 
 
-    def obter_ultimas_msuicas(quantidade):
+    def obter_ultimas_musicas(quantidade):
         return Musica.objects.order_by("-id")[:quantidade]
+    
+class CadastroAvaliacaoMusica:
+    
+    def criar(username, musica_id, nota):
+        ava = AvaliacaoMusica()
+        ava.username = username
+        ava.musica = CadastrosMusicas.obter(musica_id)
+        ava.nota = nota
+        ava.save()
+        return ava
+
+    def obter(id):
+        return AvaliacaoMusica.objects.filter(id=id).first()
+    
+    def obter_avaliacoes_usuario(username):
+        return AvaliacaoMusica.objects.filter(username=username).all()
+    
+
